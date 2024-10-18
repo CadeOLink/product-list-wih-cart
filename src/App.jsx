@@ -2,17 +2,9 @@ import React, { useEffect, useState } from "react";
 import Itens from "./components/Itens";
 import "@radix-ui/themes/styles.css";
 import { Box, Card, Container, Flex, Grid, Heading } from "@radix-ui/themes";
-import { stringify } from "postcss";
+import data from "../data.json"
 
 export default function App() {
-  const [data, setData] = useState([]);
-
-  useEffect(()=>{
-    fetch('../data.json')
-    .then((res) => res.json())
-    .then((json) => setData(json))
-    .catch((error) => console.log(`Erro encontrado: `+error))
-  });
 
   return (
     <div>
