@@ -11,6 +11,7 @@ export default function App() {
       <Flex className="bg-rose-50"> 
         <Container size="3">
           <Heading className="py-6 text-6xl">Desserts</Heading>
+<img src="public/images/image-macaron-mobile.jpg" alt="" />
             <Flex wrap="wrap" justify="between">
               {
                 data.map((dados) => (<Itens
