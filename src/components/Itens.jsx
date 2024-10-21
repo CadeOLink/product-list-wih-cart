@@ -26,7 +26,7 @@ export default function Itens(props){
                               className="text-black font-medium py-6 px-8"
                               onClick={quantityIncrement}
                            >
-                              <img src="images/icon-add-to-cart.svg" alt="icon-add-to-cart.svg" />
+                              <img src="public/images/icon-add-to-cart.svg" alt="icon-add-to-cart.svg" />
                               Add to cart
                            </Button>
                         </>

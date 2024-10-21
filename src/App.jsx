@@ -28,7 +28,7 @@ export default function App() {
             <Grid>
               <Heading className="text-red-700 py-6 text-2xl font-extrabold">Your Cart ({/* Quantia do carinho */})</Heading>
                 <Box className="place-self-center">
-                  <img src="../../images/illustration-empty-cart.svg" className="place-self-center"/>
+                  <img src="public/images/illustration-empty-cart.svg" className="place-self-center"/>
                   <p>Your added items will appear here</p>
                 </Box>
             </Grid>
