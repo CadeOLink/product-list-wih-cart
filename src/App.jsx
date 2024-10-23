@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import Itens from "./components/Itens";
 import "@radix-ui/themes/styles.css";
 import { Box, Card, Container, Flex, Grid, Heading } from "@radix-ui/themes";
 import data from "/public/data.json"
+import { Context } from "./context/Context";
+import ProductCart from "./components/ProductCart";
 
 export default function App() {
+  const {Cart, setCart} = useContext(Context);
+  const Quantity  =  Cart.reduce((ac, CartReduce) => ac + CartReduce.productquantity, 0)
 
   return (
     <div>
@@ -26,10 +30,16 @@ export default function App() {
         <Container size="1">
           <Card className="my-12">
             <Grid>
-              <Heading className="text-red-700 py-6 text-2xl font-extrabold">Your Cart ({/* Quantia do carinho */})</Heading>
+              <Heading className="text-red-700 py-6 text-2xl font-extrabold"> Your Cart ({Quantity}) </Heading>
                 <Box className="place-self-center">
-                  <img src="images/illustration-empty-cart.svg" className="place-self-center"/>
-                  <p>Your added items will appear here</p>
+                  {Quantity === 0 ? 
+                    <>
+                      <img src="images/illustration-empty-cart.svg" className="place-self-center"/>
+                      <p>Your added items will appear here</p>
+                    </>
+                  :
+                    Cart.map((dados) => (dados.productquantity === 0 ? null : <ProductCart/>))
+                  }
                 </Box>
             </Grid>
           </Card>

@@ -1,15 +1,31 @@
 import { Box, Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Context } from "../context/Context";
 
 export default function Itens(props){
-   const [quantity, setQuantity] = useState(0);
+   const [Quantity, setQuantity] = useState(0);
+   const {Cart, setCart} = useContext(Context);
 
-   const quantityIncrement = () => {
-      return setQuantity((quantity) => (quantity + 1));
+   function QuantityIncrement(id) {
+      setQuantity((Quantity) => (Quantity + 1)); 
+      setCart((Cart) => Cart.map(
+         (CartMap) => CartMap.productName === id ? {...CartMap, 
+            productquantity: CartMap.productquantity + 1, 
+            priceTotal: props.productPrice*CartMap.productquantity} 
+            : 
+            CartMap))
+      console.log(Cart);
    }
 
-   const quantityDencrement = () => {
-      return quantity > 0 ? setQuantity((quantity) => (quantity - 1)) : null; 
+   function QuantityDencrement(id){
+      Quantity > 0 ? setQuantity((Quantity) => (Quantity - 1)) : null; 
+      setCart((Cart) => Cart.map(
+         (CartMap) => CartMap.productName === id ? {...CartMap, 
+            productquantity: CartMap.productquantity - 1, 
+            priceTotal: props.productPrice*CartMap.productquantity} 
+            : 
+            CartMap))
+      console.log(Cart)
    }
 
    return (
@@ -18,13 +34,13 @@ export default function Itens(props){
                 <Grid>
                   <img src={props.productImgDesktop} className="rounded-2xl" />
                      <Flex justify="center">
-                        { quantity === 0 ?
+                        { Quantity === 0 ?
                            <>               
                            <Button 
                               variant="outline"
                               radius="full"
                               className="text-black font-medium py-6 px-8"
-                              onClick={quantityIncrement}
+                              onClick={() => {QuantityIncrement(props.productName)}}
                            >
                               <img src="images/icon-add-to-cart.svg" alt="icon-add-to-cart.svg" />
                               Add to cart
@@ -32,10 +48,26 @@ export default function Itens(props){
                         </>
                         :
                         <>
-                        <Flex>
-                           <Button onClick={quantityDencrement}>-</Button>
-                              {quantity}
-                           <Button onClick={quantityIncrement}>+</Button>
+                        <Flex> 
+                           <Button 
+                              radius="full"
+                              className="bg-red-700 text-black font-medium py-6 px-8 border-none">
+                              <Button
+                                 className="bg-transparent border-solid border-white border-2"
+                                 onClick={() => {QuantityDencrement(props.productName)}}>
+                                 -
+                              </Button>
+                                 <Box className="text-white">
+                                    {
+                                       Quantity
+                                    }
+                                 </Box>
+                              <Button 
+                                 onClick={() => {QuantityIncrement(props.productName)}}
+                                 className="bg-transparent border-solid border-white border-2">
+                                 +
+                              </Button>
+                           </Button>
                         </Flex>
                         </>
                         }
