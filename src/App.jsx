@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
 import Itens from "./components/Itens";
 import "@radix-ui/themes/styles.css";
-import { Box, Card, Container, Flex, Grid, Heading } from "@radix-ui/themes";
+import { Box, Button, Card, Container, Flex, Grid, Heading } from "@radix-ui/themes";
 import data from "/public/data.json"
 import { Context } from "./context/Context";
 import ProductCart from "./components/ProductCart";
 
 export default function App() {
-  const {Cart, setCart} = useContext(Context);
+  const { Cart, setCart } = useContext(Context);
   const Quantity  =  Cart.reduce((ac, CartReduce) => ac + CartReduce.productquantity, 0)
 
   return (
@@ -29,16 +29,31 @@ export default function App() {
         </Container>
         <Container size="1">
           <Card className="my-12">
-            <Grid>
+            <Grid >
               <Heading className="text-red-700 py-6 text-2xl font-extrabold"> Your Cart ({Quantity}) </Heading>
-                <Box className="place-self-center">
-                  {Quantity === 0 ? 
-                    <>
-                      <img src="images/illustration-empty-cart.svg" className="place-self-center"/>
-                      <p>Your added items will appear here</p>
-                    </>
-                  :
-                    Cart.map((dados) => (dados.productquantity === 0 ? null : <ProductCart/>))
+                <Box>
+                  {Quantity !== 0 ? 
+                    Cart.map((dados) => (dados.productquantity === 0 ? 
+                      null 
+                      : 
+                      <ProductCart
+                        productName={dados.productName}
+                        quantity={dados.productquantity}
+                        total={dados.priceTotal}
+                      />))
+                  : null}
+                  {Quantity == 0 ?
+                  <>
+                    <img src="images/illustration-empty-cart.svg" className="place-self-center"/>
+                    <p className="place-self-center">Your added items will appear here</p>
+                  </>
+                  : 
+                  <>
+                    <span>Order Total</span>
+                    <Heading>${1}</Heading> 
+                    <p>This is a <strong>caborn-neutral</strong> delivery</p>
+                    <Button className="bg-red-700 text-white font-medium py-6 px-8 border-none">Confirm Order</Button>
+                  </>
                   }
                 </Box>
             </Grid>

@@ -3,29 +3,29 @@ import { useContext, useState } from "react";
 import { Context } from "../context/Context";
 
 export default function Itens(props){
-   const [Quantity, setQuantity] = useState(0);
-   const {Cart, setCart} = useContext(Context);
+   const { Cart, setCart } = useContext(Context);
 
    function QuantityIncrement(id) {
-      setQuantity((Quantity) => (Quantity + 1)); 
       setCart((Cart) => Cart.map(
          (CartMap) => CartMap.productName === id ? {...CartMap, 
-            productquantity: CartMap.productquantity + 1, 
-            priceTotal: props.productPrice*CartMap.productquantity} 
+            productquantity: CartMap.productquantity + 1,
+            priceTotal: CartMap.priceTotal + props.productPrice}
             : 
             CartMap))
-      console.log(Cart);
    }
 
    function QuantityDencrement(id){
-      Quantity > 0 ? setQuantity((Quantity) => (Quantity - 1)) : null; 
       setCart((Cart) => Cart.map(
          (CartMap) => CartMap.productName === id ? {...CartMap, 
-            productquantity: CartMap.productquantity - 1, 
-            priceTotal: props.productPrice*CartMap.productquantity} 
+            productquantity: CartMap.productquantity - 1,
+            priceTotal: CartMap.priceTotal - props.productPrice}
             : 
             CartMap))
-      console.log(Cart)
+   }
+
+   function Quantity(){
+      const quantityTrue = Cart.find(CartFind => CartFind.productName === props.productName);
+      return quantityTrue ? quantityTrue.productquantity : 0;
    }
 
    return (
@@ -34,7 +34,7 @@ export default function Itens(props){
                 <Grid>
                   <img src={props.productImgDesktop} className="rounded-2xl" />
                      <Flex justify="center">
-                        { Quantity === 0 ?
+                        { Quantity() == 0 ?
                            <>               
                            <Button 
                               variant="outline"
@@ -59,7 +59,7 @@ export default function Itens(props){
                               </Button>
                                  <Box className="text-white">
                                     {
-                                       Quantity
+                                       Quantity()
                                     }
                                  </Box>
                               <Button 
