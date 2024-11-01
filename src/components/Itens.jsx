@@ -1,5 +1,5 @@
 import { Box, Button, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
-import { useContext, useState } from "react";
+import { useContext, useReducer, useState } from "react";
 import { Context } from "../context/Context";
 
 export default function Itens(props){
@@ -29,56 +29,45 @@ export default function Itens(props){
    }
 
    return (
-       <Box width="290px">
-          <Card>
+       <Box width="30%" className="bg-red-50 pb-8">
                 <Grid>
-                  <img src={props.productImgDesktop} className="rounded-2xl" />
-                     <Flex justify="center">
+                  <img src={props.productImgDesktop} className="rounded-2xl" id={props.id}/>
+                     <Flex className="justify-center">
                         { Quantity() == 0 ?
                            <>               
-                           <Button 
-                              variant="outline"
-                              radius="full"
-                              className="text-black font-medium py-6 px-8"
-                              onClick={() => {QuantityIncrement(props.productName)}}
+                           <Flex
+                              className="text-black border border-solid border-gray-500 font-medium w-2/4 py-3.5 hover:text-red-600 hover:border-solid hover:border hover:border-red-600 hover:bg-white rounded-full justify-center hover:cursor-pointer"
+                              onClick={() => {QuantityIncrement(props.productName)}} 
                            >
-                              <img src="images/icon-add-to-cart.svg" alt="icon-add-to-cart.svg" />
+                              <img src="/images/icon-add-to-cart.svg" alt="icon-add-to-cart.svg" className="w-6"/>
                               Add to cart
-                           </Button>
+                           </Flex>
                         </>
-                        :
-                        <>
-                        <Flex> 
-                           <Button 
-                              radius="full"
-                              className="bg-red-700 text-black font-medium py-6 px-8 border-none">
-                              <Button
-                                 className="bg-transparent border-solid border-white border-2"
-                                 onClick={() => {QuantityDencrement(props.productName)}}>
-                                 -
-                              </Button>
+                        : 
+                        <Box className="w-6/12 h-full">
+                           <Flex
+                              className="bg-red-700 text-black font-medium  rounded-full justify-around w-full py-3">
+                              <img src="images/icon-decrement-quantity.svg" alt="icon-decrement-quantity" 
+                              className="p-2 rounded-full border-white border-2 w-8 "
+                              onClick={() => {QuantityDencrement(props.productName)}}/>
                                  <Box className="text-white">
                                     {
                                        Quantity()
                                     }
                                  </Box>
-                              <Button 
-                                 onClick={() => {QuantityIncrement(props.productName)}}
-                                 className="bg-transparent border-solid border-white border-2">
-                                 +
-                              </Button>
-                           </Button>
-                        </Flex>
-                        </>
+                                 <img src="images/icon-increment-quantity.svg" alt="icon-decrement-quantity" 
+                                 className="p-2 rounded-full border-white border-2 w-8"
+                                 onClick={() => {QuantityIncrement(props.productName)}}/>
+                           </Flex>
+                        </Box>
                         }
                      </Flex>
                 </Grid>
                 <Grid>
                   <Text className="opacity-50 font-bold text-base">{props.productCategory}</Text>
                   <Text className="font-black text-lg">{props.productName}</Text>
-                  <Text className="text-red-700">${props.productPrice}</Text>
+                  <Text className="text-red-700">${(props.productPrice).toFixed(2)}</Text>
                 </Grid>
-          </Card>
        </Box>
    );   
 }
