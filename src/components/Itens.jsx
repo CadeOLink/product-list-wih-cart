@@ -28,6 +28,11 @@ export default function Itens(props){
       return quantityTrue ? quantityTrue.productquantity : 0;
    }
 
+   function ProductPriceValue(){
+      const productPriceTotal = Cart.find(CartFind => CartFind.productName === props.productName);
+      return productPriceTotal.priceTotal === 0 ? props.productPrice : productPriceTotal.priceTotal;
+   }
+
    return (
        <Box width="30%" className="bg-red-50 pb-8">
                 <Grid>
@@ -66,7 +71,7 @@ export default function Itens(props){
                 <Grid>
                   <Text className="opacity-50 font-bold text-base">{props.productCategory}</Text>
                   <Text className="font-black text-lg">{props.productName}</Text>
-                  <Text className="text-red-700">${(props.productPrice).toFixed(2)}</Text>
+                  <Text className="text-red-700">${ProductPriceValue().toFixed(2)}</Text>
                 </Grid>
        </Box>
    );   

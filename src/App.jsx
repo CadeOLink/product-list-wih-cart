@@ -2,18 +2,13 @@ import React, { useState, useContext } from "react";
 import Itens from "./components/Itens";
 import "@radix-ui/themes/styles.css";
 import { Box, Button, Card, Container, Flex, Grid, Heading } from "@radix-ui/themes";
-import data from "../public/data.json"
 import { Context } from "./context/Context";
 import ProductCart from "./components/ProductCart";
+import ConfirmScreen from "./components/ConfirmScreen";
 
 export default function App() {
-  const { Cart, setCart } = useContext(Context);
-  const Quantity  =  Cart.reduce((ac, CartReduce) => ac + CartReduce.productquantity, 0)
-
-  function OrderTotal(){
-    const quantityTotal = Cart.reduce((ac, CartReduce) => ac + CartReduce.priceTotal,0)
-    return quantityTotal.toFixed(2)
-  }
+  const { Cart, Mostrar, Data, OrderTotal, toggle, Quantity} = useContext(Context);
+  
 
   return (
     <div className="bg-rose-50 place-items-center">
@@ -23,7 +18,7 @@ export default function App() {
           <Heading className="py-6 text-6xl">Desserts</Heading>
             <Flex wrap="wrap" className="justify-between">
               {
-                data.map((dados) => (<Itens
+                Data.map((dados) => (<Itens
                   key={JSON.stringify(dados)} /* A falta do key gera o erro (child in a list should have a unique "key" prop) */
                   productName={dados.name} 
                   productCategory={dados.category} 
@@ -55,17 +50,18 @@ export default function App() {
                   </>
                   : 
                   <>
-                    <Flex className="justify-between py-8">
+                    <Flex className="justify-between py-3">
                       <span>Order Total</span>
                       <Heading>${OrderTotal()}</Heading> 
                     </Flex>
-                    <Flex className="justify-center">
+                    <Flex className="justify-center bg-red-100 py-5 rounded-lg">
                       <img src="images/icon-carbon-neutral.svg" alt="icon-carbon-neutral" />
                       <p>This is a <strong>caborn-neutral</strong> delivery</p>
                     </Flex>
-                    <Grid className="justify-center pt-12">
+                    <Grid className="justify-center pt-5">
                     <Button 
-                      className="bg-red-700 text-white font-medium py-6 px-8 border-none rounded-full hover:bg-red-800 hover:cursor-pointer">
+                      className="bg-red-700 text-white font-medium py-6 px-8 border-none rounded-full hover:bg-red-800 hover:cursor-pointer"
+                      onClick={() => {toggle()}}>
                       Confirm Order
                     </Button>
                     </Grid>
@@ -76,6 +72,7 @@ export default function App() {
       </Container>
       </Flex>
       </Box>
+      {Mostrar && <ConfirmScreen/>}
     </div>    
   )
 }

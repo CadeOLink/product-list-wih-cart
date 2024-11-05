@@ -3,13 +3,8 @@ import { useContext } from "react"
 import { Context } from "../context/Context";
 
 export default function ProductCart(props){
-   const { Cart, setCart} = useContext(Context);
+   const { clearItenCart } = useContext(Context);
    
-   function clearItenCart(Name){
-      setCart(Cart.map((CartMap) => 
-         (CartMap.productName === Name ? {...CartMap, productquantity: 0, priceTotal: 0} : CartMap)))
-   }
-
    return(
       <div className="py-2">
          <Heading className="text-xl font-extrabold">{props.productName}</Heading>
