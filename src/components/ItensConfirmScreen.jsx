@@ -12,7 +12,7 @@ export default function ItensConfirmScreen(props){
    return(
       <Box className="py-2">
          <Flex>
-            <img src={DadosItens.image.desktop} className="w-10" />
+            <img src={DadosItens.image.desktop} className="h-10" />
                <Grid>
                   <p>{DadosItens.name}</p>
                      <Flex>

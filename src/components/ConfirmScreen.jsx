@@ -16,7 +16,7 @@ export default function ConfirmScreen(){
                   </Heading>
                   <span>We hope you enjoy your food!</span>
                </Box>
-                  <Box className="bg-red-50 rounded-lg">
+                  <Box className="bg-red-50 rounded-lg py-4 px-4">
                      <Box>
                         {Cart.map((CartMap) => CartMap.productquantity > 0 ? 
                         <ItensConfirmScreen 

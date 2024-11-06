@@ -7,8 +7,11 @@ import ProductCart from "./components/ProductCart";
 import ConfirmScreen from "./components/ConfirmScreen";
 
 export default function App() {
-  const { Cart, Mostrar, Data, OrderTotal, toggle, Quantity} = useContext(Context);
+  const { Cart, Mostrar, Data, OrderTotal, toggle, Quantity, getDados} = useContext(Context);
   
+  /**
+   * TODO: Faça uma maneira de pegar os id's loopar e os dados passarem para o component <Itens>
+  */
 
   return (
     <div className="bg-rose-50 place-items-center">

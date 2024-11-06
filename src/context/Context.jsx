@@ -18,6 +18,25 @@ export const ContextProvider =({children}) => {
       {productName:"Vanilla Panna Cotta", productquantity:0, priceTotal:0},
    ]);
 
+  const getDados = async (endpoint, id) => {
+      try{
+         const resquest = await fetch(endpoint+id);
+         
+         if(!resquest.ok){
+            throw new Error(response.error);
+         }
+
+         const response = await resquest.json();
+
+         return [response]
+
+      } catch(error) {
+         console.error("Error ao buscar dados: ", error);
+      }
+   } 
+   // ? getDados('http://localhost:3000/', 4).then(dados => console.log(dados))
+   // ? Exemplo de como usar a função para buscar dados 
+
    const Quantity = Cart.reduce((ac, CartReduce) => ac + CartReduce.productquantity, 0)
 
    const OrderTotal = () => {
@@ -44,7 +63,7 @@ export const ContextProvider =({children}) => {
   },[])
 
    return(
-      <Context.Provider value={{Cart, setCart, Mostrar, setMostrar, Data, setData, OrderTotal, toggle, clearItenCart, Quantity, clearDados}}>
+      <Context.Provider value={{Cart, setCart, Mostrar, setMostrar, Data, setData, OrderTotal, toggle, clearItenCart, Quantity, clearDados, getDados}}>
          {children}
       </Context.Provider>
    )
