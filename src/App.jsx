@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Itens from "./components/Itens";
 import "@radix-ui/themes/styles.css";
 import { Box, Button, Card, Container, Flex, Grid, Heading } from "@radix-ui/themes";
@@ -7,11 +7,7 @@ import ProductCart from "./components/ProductCart";
 import ConfirmScreen from "./components/ConfirmScreen";
 
 export default function App() {
-  const { Cart, Mostrar, Data, OrderTotal, toggle, Quantity, getDados} = useContext(Context);
-  
-  /**
-   * TODO: Faça uma maneira de pegar os id's loopar e os dados passarem para o component <Itens>
-  */
+  const { Cart, Mostrar, Data, OrderTotal, toggle, Quantity} = useContext(Context);
 
   return (
     <div className="bg-rose-50 place-items-center">
@@ -21,19 +17,21 @@ export default function App() {
           <Heading className="py-6 text-6xl">Desserts</Heading>
             <Flex wrap="wrap" className="justify-between">
               {
-                Data.map((dados) => (<Itens
+                Data != undefined ? Data.map((dados) => (<Itens
                   key={JSON.stringify(dados)} /* A falta do key gera o erro (child in a list should have a unique "key" prop) */
                   productName={dados.name} 
                   productCategory={dados.category} 
                   productPrice={dados.price}
                   productImgDesktop={dados.image.desktop}
-                />))
+                />)) 
+                : 
+                null
               }
             </Flex>
         </Container>
         <Container className="basis-1/4">
             <Grid className="mt-6 bg-white rounded-xl py-6 px-6">
-              <Heading className="text-red-700 text-2xl font-extrabold"> Your Cart ({Quantity}) </Heading>
+              <Heading className="text-red-700 text-2xl fon t-extrabold"> Your Cart ({Quantity}) </Heading>
                 <Box>
                   {Quantity !== 0 ? 
                     Cart.map((dados) => (dados.productquantity === 0 ? 

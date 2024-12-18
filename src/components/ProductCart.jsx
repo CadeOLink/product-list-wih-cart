@@ -15,7 +15,7 @@ export default function ProductCart(props){
                   <span className="text-amber-900 opacity-70 text-lg">${props.total.toFixed(2)}</span>
                </Flex>
                <img src="images/icon-remove-item.svg" alt="icon-remove-item"  
-                  className="border-2 border-gray-300 px-1 py-1 h-full rounded-full"
+                  className="border-2 border-gray-300 px-1 py-1 h-full rounded-full cursor-pointer"
                   onClick={() => {clearItenCart(props.productName)}}
                />
             </Flex>  

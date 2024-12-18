@@ -4,25 +4,27 @@ import { Context } from "../context/Context";
 
 
 export default function ItensConfirmScreen(props){
-   const { Cart, setCart, Data } = useContext(Context)
+   const { Data } = useContext(Context)
 
    const DadosItens = Data.find(dados => props.productName === dados.name)
    
 
    return(
-      <Box className="py-2">
-         <Flex>
-            <img src={DadosItens.image.desktop} className="h-10" />
-               <Grid>
-                  <p>{DadosItens.name}</p>
+      <Container>
+         <Flex className="py-3 justify-between">
+            <Flex>
+               <img src={DadosItens.image.desktop} className="h-10 rounded-md"/>
+                  <Grid className="px-4">
+                     <p className="font-bold">{DadosItens.name}</p>
                      <Flex>
-                     <span>{props.productQuantity}</span>
-                     <span>{DadosItens.price}</span>
+                        <p className="text-red-700 font-extrabold">{props.productQuantity}x</p>
+                        <p className="text-gray-900 opacity-50 text-lg px-4">@{(props.productPriceTotal/props.productQuantity).toFixed(2)}</p>
                      </Flex>
-               </Grid>
-               <p>{props.productPriceTotal}</p>
+                  </Grid>
+            </Flex>
+                  <p className="bg-red-50 font-bold">${props.productPriceTotal.toFixed(2)}</p>
          </Flex>
          <hr />
-      </Box>
+      </Container>
    )
 }

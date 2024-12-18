@@ -1,9 +1,8 @@
 import { createContext, useEffect, useState } from 'react'
-import data from "../../public/data.json"
 export const Context = createContext()
 
 export const ContextProvider =({children}) => {
-   const [Data, setData] = useState([])
+   const [Data, setData] = useState()
    const [Mostrar, setMostrar] = useState(false)
    const [Cart, setCart] = useState(
      [ 
@@ -17,25 +16,6 @@ export const ContextProvider =({children}) => {
       {productName:"Salted Caramel Brownie", productquantity:0, priceTotal:0},
       {productName:"Vanilla Panna Cotta", productquantity:0, priceTotal:0},
    ]);
-
-  const getDados = async (endpoint, id) => {
-      try{
-         const resquest = await fetch(endpoint+id);
-         
-         if(!resquest.ok){
-            throw new Error(response.error);
-         }
-
-         const response = await resquest.json();
-
-         return [response]
-
-      } catch(error) {
-         console.error("Error ao buscar dados: ", error);
-      }
-   } 
-   // ? getDados('http://localhost:3000/', 4).then(dados => console.log(dados))
-   // ? Exemplo de como usar a função para buscar dados 
 
    const Quantity = Cart.reduce((ac, CartReduce) => ac + CartReduce.productquantity, 0)
 
@@ -58,13 +38,33 @@ export const ContextProvider =({children}) => {
       alert("Thanks for buying")
    }
 
-  useEffect(() => {
-   return setData(data.map(dados => dados))
-  },[])
-
+   useEffect(()=>{
+      const getDados = async() => {
+         try{
+            const Ids = [0,1,2,3,4,5,6,7,8]
+   
+            const resposta = await Promise.all(Ids.map(IdsMap => fetch(`http://localhost:3000/${IdsMap}`)))
+   
+            resposta.forEach(resposta => {
+               if (!resposta.ok) {  
+                 throw new Error(`Erro na requisição`);
+               }
+             });
+            
+            const data = await Promise.all(resposta.map(respostaMap => respostaMap.json()))
+            setData(data)
+         }
+         catch (Error){
+            console.log(Error)
+         }
+      } 
+      getDados()
+   },[])
+   
    return(
-      <Context.Provider value={{Cart, setCart, Mostrar, setMostrar, Data, setData, OrderTotal, toggle, clearItenCart, Quantity, clearDados, getDados}}>
-         {children}
+      <Context.Provider value={
+         {Cart, setCart, Mostrar, setMostrar, Data, setData, OrderTotal, toggle, clearItenCart, Quantity, clearDados}}>
+            {children}
       </Context.Provider>
    )
 }
